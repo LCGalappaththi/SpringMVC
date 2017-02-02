@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,6 +29,13 @@ public class HomeController {
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String home() {
         return "home";
+    }
+
+    @RequestMapping(value = "showImage", method = RequestMethod.GET)
+    public String image(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws SQLException, IOException {
+        Blob image=context.getFacilitatorLogin(request.getParameter("usr")).getImage();
+        model.addAttribute("image",image);
+        return "showImage";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -141,12 +150,6 @@ public class HomeController {
             model.put("msg", "signIn failed!!!");
             return "signIn";
         }
-    }
-
-
-    @RequestMapping(value = "uploadServlet", method = RequestMethod.POST)
-    public String uploadImage(HttpServletRequest request) {
-       return "login";
     }
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)

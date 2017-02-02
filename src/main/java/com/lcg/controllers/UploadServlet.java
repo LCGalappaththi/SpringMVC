@@ -20,9 +20,9 @@ import java.sql.SQLException;
 public class UploadServlet extends HttpServlet {
 
     // database connection settings
-    String dbURL = "jdbc:mysql://localhost:3306/teamexception";
-    String dbUser = "root";
-    String dbPass = "";
+    private String dbURL = "jdbc:mysql://localhost:3306/teamexception";
+    private String dbUser = "root";
+    private String dbPass = "";
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +30,6 @@ public class UploadServlet extends HttpServlet {
 
         String facilitatorId = request.getSession().getAttribute("facilitatorId").toString();
         InputStream inputStream = null; // input stream of the upload file
-        System.out.println(facilitatorId);
 
         // obtains the upload file part in this multipart request
         Part filePart = request.getPart("file");
@@ -67,11 +66,12 @@ public class UploadServlet extends HttpServlet {
             if (row > 0) {
                 System.out.println("ok");
                 request.getServletContext().getRequestDispatcher("/views/login.jsp").forward(request, response);
-
             }
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println("error");
             ex.printStackTrace();
+            request.setAttribute("msg", "upload failed");
+            request.getServletContext().getRequestDispatcher("/views/upload.jsp").forward(request, response);
         } finally {
             if (conn != null) {
                 // closes the database connection
