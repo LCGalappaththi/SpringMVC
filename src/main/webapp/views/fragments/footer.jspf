@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-3.3.7/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+    body {
+        background: url(${pageContext.request.contextPath}/resources/images/93742-d09dd7090171c70be749072814043b26.jpg);
+    }
+</style>
+
+<div class="container">
+    <hr>
+    <h1>Footer</h1>
+</div>
