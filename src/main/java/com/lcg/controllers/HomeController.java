@@ -56,6 +56,7 @@ public class HomeController {
             model.put("status", "Successfully logged");
             request.getSession().setAttribute("loggedUserName", context.getFacilitatorLogin(user).getName());
             request.getSession().setAttribute("loggedUserId", context.getFacilitatorLogin(user).getFacilitatorId());
+            request.getSession().setAttribute("loggedUserId", context.getFacilitatorLogin(user).getFacilitatorId());
             return "manage";
         } else {
             model.put("status", "wrong credentials");

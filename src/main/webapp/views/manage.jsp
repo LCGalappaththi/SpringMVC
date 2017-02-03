@@ -15,6 +15,7 @@
 <body onload="showText()">
 <h2 id="msg">${msg}</h2>
 <h1 style="display: inline;">Hello ${loggedUserName}</h1>
+
 <form  action="/logout" method="GET">
     <input type="submit" value="Logout"/>
 </form>

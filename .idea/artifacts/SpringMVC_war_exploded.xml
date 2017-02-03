@@ -17,6 +17,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.3.RELEASE" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.27" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: javax:javaee-web-api:7.0" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
