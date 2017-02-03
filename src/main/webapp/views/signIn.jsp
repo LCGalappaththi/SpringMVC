@@ -23,9 +23,7 @@
 
     <script type="text/javascript"
             src="http://maps.google.com/maps/api/js?key=AIzaSyARnfrrY6BwdvVAbYDFjmIFEtIoFpjIMYk"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-3.3.7/css/bootstrap.min.css">
-    <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.1.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+
     <script type="text/javascript">
         var latLng;
         var map;

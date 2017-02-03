@@ -13,8 +13,7 @@
 </head>
 <body>
 
-<h1>ybgyuyftvtffy</h1>
-<div id="img" >
+<div id="img">
     <%
         Blob image;
         byte[] imgData;
