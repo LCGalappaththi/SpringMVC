@@ -286,4 +286,5 @@
 <div id="footer">
     <%@ include file="fragments/footer.jspf" %>
 </div>
+
 </html>

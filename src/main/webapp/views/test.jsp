@@ -32,7 +32,7 @@
         <div class="panel-body">
 
 
-            <h1>---------------------Your details----------------------------</h1>
+            <h1>--------------------------------Your details----------------------------</h1>
             <c:out value="${details.name}"/>
             <h2>${details.getPassword()}</h2>
             <h2>${details.getName()}</h2>

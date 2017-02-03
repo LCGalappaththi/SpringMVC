@@ -8,16 +8,19 @@
             height: 400px;
             float: left;
         }
+
         #infoPanel {
             float: left;
             margin-left: 10px;
         }
+
         #infoPanel div {
             margin-bottom: 5px;
         }
 
     </style>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyARnfrrY6BwdvVAbYDFjmIFEtIoFpjIMYk"></script>
+    <script type="text/javascript"
+            src="http://maps.google.com/maps/api/js?key=AIzaSyARnfrrY6BwdvVAbYDFjmIFEtIoFpjIMYk"></script>
     <script type="text/javascript">
         var latLng;
         var map;
@@ -28,29 +31,30 @@
                 document.getElementById("valid").innerHTML = "";
                 return;
             } else {
-                if (str.length <6) {
+                if (str.length < 6) {
                     document.getElementById("valid").style.color = "red";
-                    document.getElementById("valid").innerHTML ="<- too short";plate=0;
-                } else{
+                    document.getElementById("valid").innerHTML = "<- too short";
+                    plate = 0;
+                } else {
                     var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
+                    xmlhttp.onreadystatechange = function () {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            document.getElementById("valid").innerHTML =xmlhttp.responseText;
+                            document.getElementById("valid").innerHTML = xmlhttp.responseText;
                         }
                     };
-                    xmlhttp.open("GET","ajax/"+str,true);
+                    xmlhttp.open("GET", "ajax/" + str, true);
                     xmlhttp.send();
                 }
             }
         }
 
-        function clear(){
-            document.getElementById("msg").innerHTML="&nbsp;";
+        function clear() {
+            document.getElementById("msg").innerHTML = "&nbsp;";
         }
 
-        function showText(){
-            document.getElementById("previous").disabled=true;
-            setTimeout(clear,3000);
+        function showText() {
+            document.getElementById("previous").disabled = true;
+            setTimeout(clear, 3000);
         }
 
         var geocoder = new google.maps.Geocoder();
@@ -58,7 +62,7 @@
         function geocodePosition(pos) {
             geocoder.geocode({
                 latLng: pos
-            }, function(responses) {
+            }, function (responses) {
                 if (responses && responses.length > 0) {
                     updateMarkerAddress(responses[0].formatted_address);
                 } else {
@@ -76,22 +80,22 @@
                 latLng.lat(),
                 latLng.lng()
             ].join(', ');
-            document.getElementById('lati').value=latLng.lat();
-            document.getElementById('longi').value=latLng.lng();
+            document.getElementById('lati').value = latLng.lat();
+            document.getElementById('longi').value = latLng.lng();
         }
 
         function updateMarkerAddress(str) {
             document.getElementById('address').innerHTML = str;
         }
 
-        function getCurrent(){
-            document.getElementById("previous").disabled=false;
-            document.getElementById("current").disabled=true;
+        function getCurrent() {
+            document.getElementById("previous").disabled = false;
+            document.getElementById("current").disabled = true;
             navigator.geolocation.getCurrentPosition(showCurrent);
         }
 
-        function showCurrent(position){
-            var current = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        function showCurrent(position) {
+            var current = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             map = new google.maps.Map(document.getElementById('mapCanvas'), {
                 zoom: 12,
                 center: current,
@@ -112,11 +116,10 @@
         }
 
 
-
         function initialize() {
-            document.getElementById("previous").disabled=true;
-            document.getElementById("current").disabled=false;
-            latLng = new google.maps.LatLng(${details.getLatitude()},${details.getLongitude()});
+            document.getElementById("previous").disabled = true;
+            document.getElementById("current").disabled = false;
+            latLng = new google.maps.LatLng(${details.getLatitude()}, ${details.getLongitude()});
             map = new google.maps.Map(document.getElementById('mapCanvas'), {
                 zoom: 12,
                 center: latLng,
@@ -134,16 +137,16 @@
             geocodePosition(latLng);
 
             // Add dragging event listeners.
-            google.maps.event.addListener(marker, 'dragstart', function() {
+            google.maps.event.addListener(marker, 'dragstart', function () {
                 updateMarkerAddress('Dragging...');
             });
 
-            google.maps.event.addListener(marker, 'drag', function() {
+            google.maps.event.addListener(marker, 'drag', function () {
                 updateMarkerStatus('Dragging...');
                 updateMarkerPosition(marker.getPosition());
             });
 
-            google.maps.event.addListener(marker, 'dragend', function() {
+            google.maps.event.addListener(marker, 'dragend', function () {
                 updateMarkerStatus('Drag ended');
                 geocodePosition(marker.getPosition());
             });
@@ -153,44 +156,138 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 </head>
+
+<div id="header">
+    <%@ include file="fragments/header.jspf" %>
+</div>
+
 <body onload="showText()">
-<h2 id="msg">${msg}</h2>
-<h1 style="display: inline;">Hello ${loggedUserName}</h1>
-<h1>Update your Details</h1>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1> Hello ${loggedUserName} Update your Details</h1>
+            <h2 id="msg">${msg}</h2></div>
+        <div class="panel-body">
+            <form class="form-horizontal" action="/updatenow" method="GET">
 
-<form action="/updatenow" method="GET">
-    <label>Username:</label><input type="text" name="username" onblur="checkUser(this.value)" onkeyup="checkUser(this.value)" value="${details.getUsername()}"/>
-    <label id="valid"></label><br>
-    <label>Password:</label><input type="password" name="password" value="${details.getPassword()}"/><br>
-    <label>Retype Password:</label><input type="password" name="passwordConfirm" placeholder="Re-type Password"/><br>
-    <label>Name:</label><input type="text" name="name" value="${details.getName()}"/><br>
-    <label>Address:</label><input type="text" name="address" value="${details.getAddress()}"/><br>
-    <label>ContactNo 1:</label><input type="text" name="contact1" value="${details.getContact1()}"/><br>
-    <label>ContactNo 2:</label><input type="text" name="contact2" value="${details.getContact2()}"/><br>
-    <label>ContactNo 3:</label><input type="text" name="contact3" value="${details.getContact3()}"/><br>
-    <label>Type:</label><input type="text" name="type" value="${details.getType()}"/><br>
-    <label>Longitude:</label><input type="text" id="longi" name="longitude" value="${details.getLongitude()}"/><br>
-    <label>Latitude:</label><input type="text" id="lati" name="latitude" value="${details.getLatitude()}"/><br>
-    <input type="submit" value="Update details"/>
-</form>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Username:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="username" onblur="checkUser(this.value)"
+                               onkeyup="checkUser(this.value)" value="${details.getUsername()}"/>
+                        <label id="valid"></label><br>
+                    </div>
+                </div>
 
-<form  action="/logout" method="GET">
-    <input type="submit" value="Logout"/>
-</form>
-<div id="floating-panel">
-    <button id="current" onclick="getCurrent()">Get Current Location</button>
-    <button id="previous" onclick="initialize()">Get Previous Location</button>
-</div>
-<div id="mapCanvas">
-</div>
-<div id="infoPanel">
-    <b>Marker status:</b>
-    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-    <b>Current position:</b>
-    <div id="info"></div>
-    <b>Closest matching address:</b>
-    <div id="address"></div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Password:</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" name="password"
+                               value="${details.getPassword()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Retype Password:</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" name="passwordConfirm"
+                               placeholder="Re-type Password"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="name" value="${details.getName()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Address:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="address" value="${details.getAddress()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">ContactNo 1:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="contact1" value="${details.getContact1()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">ContactNo 2:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="contact2"
+                               value="${details.getContact2()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">ContactNo 3:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="contact3"
+                               value="${details.getContact3()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Type:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="type" value="${details.getType()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Longitude:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="longi" class="form-control" name="longitude"
+                               value="${details.getLongitude()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Latitude:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="lati" class="form-control" name="latitude"
+                               value="${details.getLatitude()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-success" value="Update details"/>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-horizontal" action="/logout" method="GET">
+                <input type="submit" class="btn btn-primary" value="Logout"/>
+            </form>
+
+            <div id="floating-panel">
+                <button id="current" onclick="getCurrent()">Get Current Location</button>
+                <button id="previous" onclick="initialize()">Get Previous Location</button>
+            </div>
+
+            <div id="mapCanvas"></div>
+
+            <div id="infoPanel">
+                <b>Marker status:</b>
+                <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                <b>Current position:</b>
+                <div id="info"></div>
+                <b>Closest matching address:</b>
+                <div id="address"></div>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
+
+<div id="footer">
+    <%@ include file="fragments/footer.jspf" %>
+</div>
 
 </html>

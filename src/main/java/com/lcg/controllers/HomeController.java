@@ -33,8 +33,8 @@ public class HomeController {
 
     @RequestMapping(value = "showImage", method = RequestMethod.GET)
     public String image(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws SQLException, IOException {
-        Blob image=context.getFacilitatorLogin(request.getParameter("usr")).getImage();
-        model.addAttribute("image",image);
+        Blob image = context.getFacilitatorLogin(request.getParameter("usr")).getImage();
+        model.addAttribute("image", image);
         return "showImage";
     }
 
@@ -197,7 +197,6 @@ public class HomeController {
                 System.out.println();
             System.out.print(arr[i] + " ");//printing sets
         }
-
         return "manage";
     }
 }
