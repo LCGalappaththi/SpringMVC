@@ -13,9 +13,6 @@
             setTimeout(clear, 3000);
         }
 
-        function loadImage() {
-            window.open("/showImage?usr=${details.getUsername()}", "MsgWindow", "width=1000, height=600");
-        }
     </script>
 
 </head>
@@ -39,6 +36,8 @@
             <h2>${details.getAddress()}</h2>
             <h2>${details.getUsername()}</h2>
 
+            <img width="200" height="200" src="/showImage?usr=${details.getUsername()}" alt="Image"/>
+
             <form action="/logout" method="GET">
                 <input type="submit" value="Logout"/>
             </form>
@@ -50,10 +49,6 @@
             <form action="/maps" method="GET">
                 <input type="submit" value="show me in map"/>
             </form>
-
-            <button  onclick="loadImage()" id="imageBtn">
-                <h4>Show Image</h4>
-            </button>
 
         </div>
     </div>

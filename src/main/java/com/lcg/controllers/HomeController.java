@@ -26,7 +26,7 @@ public class HomeController {
     @Autowired
     private Facilitator facilitator;
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
+    @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
     public String home() {
         return "home";
     }
@@ -69,7 +69,7 @@ public class HomeController {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
         Facilitator logged = context.getFacilitatorDetails(facilitatorId);
         model.addAttribute("details", logged);
-        return "test";
+        return "account";
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.GET)
