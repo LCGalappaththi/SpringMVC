@@ -106,7 +106,7 @@ public class HomeController {
     @RequestMapping(value = "updatenow", method = RequestMethod.GET)
     public String UpdateFacilitator(HttpServletRequest request, ModelMap model) throws SQLException, ClassNotFoundException {
         facilitator.setUsername(request.getParameter("username"));
-        facilitator.setPassword(request.getParameter("password"));
+        facilitator.setPassword(request.getParameter("newPassword"));
         facilitator.setFacilitatorId(request.getSession().getAttribute("loggedUserId").toString());
         facilitator.setName(request.getParameter("name"));
         facilitator.setAddress(request.getParameter("address"));

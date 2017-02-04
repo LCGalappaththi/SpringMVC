@@ -32,19 +32,14 @@
 
     <script type="text/javascript">
 
-        function loadPage(option) {
-            if (option == 1) {
-                window.open("/login", "MsgWindow", "width=1000, height=600");
-            } else
-                window.open("/signIn", "MsgWindow", "width=1000, height=600");
-        }
-
         function clear() {
             document.getElementById("msg").innerHTML = "&nbsp;";
         }
+
         function showText() {
             setTimeout(clear, 3000);
         }
+
     </script>
 </head>
 
@@ -58,22 +53,29 @@
         <div class="panel-heading"><h1>Facilitator Home Page</h1>
             <h2 id="msg">${msg}</h2></div>
         <div class="panel-body">
-            <div class="col-sm-offset-2 col-sm-10">
-
-                <button class="btn btn-success" onclick="loadPage(1)" id="logInBtn">
-                    <h2>Log In</h2>
-                </button>
-
-                <button class="btn btn-success" onclick="loadPage(2)" id="signInBtn">
-                    <h2>Sign In</h2>
-                </button>
-
-            </div>
-
-            <br>
-            <br>
-            <br>
             <h1>Choose Your Option</h1>
+            <form class="form-horizontal" method="GET" action="/login">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button style="width: 80%; padding-right: 10%; padding-left: 10%;" type="submit"
+                                class="btn btn-success"><h1>Login</h1></button>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-horizontal" method="GET" action="/signIn">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button style="width: 80%; padding-right: 10%; padding-left: 10%;" type="submit"
+                                class="btn btn-primary"><h1>Signin</h1></button>
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            <br>
+            <br>
+
         </div>
     </div>
 </div>

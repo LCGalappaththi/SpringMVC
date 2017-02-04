@@ -3,12 +3,15 @@
 <head>
     <title>Login</title>
     <script type="text/javascript">
+
         function clear() {
             document.getElementById("msg").innerHTML = "&nbsp;";
         }
+
         function showText() {
             setTimeout(clear, 3000);
         }
+
     </script>
 </head>
 
@@ -37,7 +40,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <input type="submit" class="btn btn-success" value="Login"/>
+                        <button type="submit" class="btn btn-success"><h4>Login>></h4></button>
                     </div>
                 </div>
             </form>

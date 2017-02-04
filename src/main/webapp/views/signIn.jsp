@@ -181,15 +181,24 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Password:</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" name="password" placeholder="Enter Password"/><br>
+                        <input type="password" id="passBox" class="form-control" name="password"
+                               placeholder="Enter Password"/>
+                        <input type="checkbox"
+                               onclick="if(this.checked)passBox.type='text';else passBox.type='password';"/> show
+                        characters
+                        <br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">Retype Password:</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" name="passwordConfirm"
-                               placeholder="Re-type Password"/><br>
+                        <input type="password" id="repassBox" class="form-control" name="passwordConfirm"
+                               placeholder="Re-type Password"/>
+                        <input type="checkbox"
+                               onclick="if(this.checked)repassBox.type='text';else repassBox.type='password';"/> show
+                        characters
+                        <br>
                     </div>
                 </div>
 

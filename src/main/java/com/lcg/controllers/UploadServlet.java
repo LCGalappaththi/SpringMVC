@@ -1,11 +1,5 @@
 package com.lcg.controllers;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,25 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.List;
 
 
 @WebServlet("/uploadServlet")
 @MultipartConfig(maxFileSize = 16177215)    // upload file's size up to 16MB
 public class UploadServlet extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-    private static final String DATA_DIRECTORY = "data";
-    private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 2;
-    private static final int MAX_REQUEST_SIZE = 1024 * 1024;
 
     // database connection settings
     private String dbURL = "jdbc:mysql://localhost:3306/teamexception";
@@ -80,7 +66,7 @@ public class UploadServlet extends HttpServlet {
             if (row > 0) {
                 System.out.println("ok");
                 try {
-                   // writeFile(request);
+                    // writeFile(request);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -99,45 +85,6 @@ public class UploadServlet extends HttpServlet {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-            }
-        }
-
-    }
-
-
-    void writeFile(HttpServletRequest request) throws Exception {
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart) {
-            // Create a factory for disk-based file items
-            FileItemFactory factory = new DiskFileItemFactory();
-
-            // Create a new file upload handler
-            ServletFileUpload upload = new ServletFileUpload(factory);
-
-            try {
-                // Parse the request
-                List items = upload.parseRequest(request);
-                Iterator iterator = items.iterator();
-                while (iterator.hasNext()) {
-                    System.out.println("1");
-                    FileItem item = (FileItem) iterator.next();
-                    if (!item.isFormField()) {
-                        String fileName = item.getName();
-                        String root = getServletContext().getRealPath("/");
-                        File path = new File(root + "/uploads");
-                        if (!path.exists()) {
-                            boolean status = path.mkdirs();
-                        }
-
-                        File uploadedFile = new File(path + "/" + fileName);
-                        System.out.println(uploadedFile.getAbsolutePath());
-                        item.write(uploadedFile);
-                    }
-                }
-            } catch (FileUploadException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
 

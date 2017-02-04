@@ -21,10 +21,22 @@
     </style>
     <script type="text/javascript"
             src="http://maps.google.com/maps/api/js?key=AIzaSyARnfrrY6BwdvVAbYDFjmIFEtIoFpjIMYk"></script>
+    <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript">
         var latLng;
         var map;
         var marker;
+
+        $(document).ready(function () {
+            $('#changePassword').hide();
+            $('#cur').keyup(function () {
+                if ($('#cur').val() ==${details.getPassword()}) {
+                    $('#changePassword').show();
+                } else {
+                    $('#changePassword').hide();
+                }
+            });
+        });
 
         function checkUser(str) {
             if (str.length == 0) {
@@ -181,16 +193,38 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Password:</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" name="password"
-                               value="${details.getPassword()}"/><br>
+                        <input type="password" id="cur" class="form-control" name="password"
+                               placeholder="Enter Current password To change Password"/>
+                        <input type="checkbox"
+                               onclick="if(this.checked)cur.type='text';else cur.type='password';"/> show
+                        characters
+                        <br>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Retype Password:</label>
-                    <div class="col-sm-6">
-                        <input type="password" class="form-control" name="passwordConfirm"
-                               placeholder="Re-type Password"/><br>
+                <div id="changePassword">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">New Password:</label>
+                        <div class="col-sm-6">
+                            <input type="password" id="newP" class="form-control" name="newPassword"
+                                   placeholder="Enter new password"/>
+                            <input type="checkbox"
+                                   onclick="if(this.checked)newP.type='text';else newP.type='password';"/> show
+                            characters
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Retype New Password:</label>
+                        <div class="col-sm-6">
+                            <input type="password" id="renewP" class="form-control" name="newPasswordConfirm"
+                                   placeholder="Re-Enter new password"/>
+                            <input type="checkbox"
+                                   onclick="if(this.checked)renewP.type='text';else renewP.type='password';"/> show
+                            characters
+                            <br>
+                        </div>
                     </div>
                 </div>
 
@@ -211,14 +245,15 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">ContactNo 1:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="contact1" value="${details.getContact1()}"/><br>
+                        <input type="text" class="form-control" name="contact1" placeholder="Enter ContactNo 1"
+                               value="${details.getContact1()}"/><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">ContactNo 2:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="contact2"
+                        <input type="text" class="form-control" name="contact2" placeholder="Enter ContactNo 2"
                                value="${details.getContact2()}"/><br>
                     </div>
                 </div>
@@ -226,7 +261,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">ContactNo 3:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="contact3"
+                        <input type="text" class="form-control" name="contact3" placeholder="Enter ContactNo 2"
                                value="${details.getContact3()}"/><br>
                     </div>
                 </div>
