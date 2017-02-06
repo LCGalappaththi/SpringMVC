@@ -8,6 +8,7 @@ public class Facilitator {
     private String contactId;
     private String facilitatorId;
     private String name;
+    private String email;
     private String address;
     private String type;
     private String longitude;
@@ -120,5 +121,13 @@ public class Facilitator {
 
     public void setImage(Blob image) {
         this.image = image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

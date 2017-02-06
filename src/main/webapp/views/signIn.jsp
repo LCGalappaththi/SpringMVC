@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>SignIn</title>
@@ -23,11 +24,13 @@
 
     <script type="text/javascript"
             src="http://maps.google.com/maps/api/js?key=AIzaSyARnfrrY6BwdvVAbYDFjmIFEtIoFpjIMYk"></script>
+    <script src="${pageContext.request.contextPath}/resources/jquery/jquery-3.1.1.min.js"></script>
 
     <script type="text/javascript">
         var latLng;
         var map;
         var marker;
+        var validEmail = 0;
 
         function checkUser(str) {
             if (str.length == 0) {
@@ -50,11 +53,83 @@
             }
         }
 
+        function checkEmail(str) {
+            if (str.length == 0) {
+                document.getElementById("validEmail").innerHTML = "";
+                return;
+            } else {
+                if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str)) {
+                    document.getElementById("validEmail").style.color = "red";
+                    document.getElementById("validEmail").innerHTML = "<- Invalid Email";
+                    document.getElementById("emailBtn").style.display = "none";
+                    validEmail = 0;
+                } else {
+                    document.getElementById("validEmail").style.color = "blue";
+                    document.getElementById("validEmail").innerHTML = "<- Valid Email";
+                    document.getElementById("emailBtn").style.display = "initial";
+                    validEmail = 1;
+                }
+            }
+        }
+
+        function sendEmail() {
+            var code;
+            var email = document.getElementById("email").value;
+            var name = document.getElementById("name").value;
+            if (validEmail == 1) {
+                document.getElementById("emailBtn").disabled = true;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        if (xmlhttp.responseText == "sent_failed") {
+                            document.getElementById("validEmail").style.color = "red";
+                            document.getElementById("validEmail").innerHTML = "<-Check Email and Try again";
+                            document.getElementById("email_verified").value = "false";
+                            document.getElementById("emailBtn").disabled = false;
+                        } else {
+                            code = prompt("Please enter the confirmation code that we have sent to you(If you are not recieved with our email check  again)", "");
+
+                            if (code == xmlhttp.responseText) {
+                                document.getElementById("validEmail").style.color = "blue";
+                                document.getElementById("validEmail").innerHTML = "Email Verified";
+                                document.getElementById("email_verified").value = "true";
+                                document.getElementById("email").disabled = true;
+                                document.getElementById("emailBtn").style.display = "none";
+                            } else {
+                                document.getElementById("validEmail").style.color = "red";
+                                document.getElementById("validEmail").innerHTML = "Verification Failed";
+                                document.getElementById("email_verified").value = "false";
+                                document.getElementById("emailBtn").disabled = false;
+                                while (true) {
+                                    if (confirm('Wrong code!!! Do You Want To Enter code Again?')) {
+                                        code = prompt("Please enter the confirmation code that we have sent to you(If you are not recieved with our email check  again)", "");
+                                        if (code == xmlhttp.responseText) {
+                                            document.getElementById("validEmail").style.color = "blue";
+                                            document.getElementById("validEmail").innerHTML = "Email Verified";
+                                            document.getElementById("email").disabled = true;
+                                            document.getElementById("emailBtn").style.display = "none";
+                                            document.getElementById("email_verified").value = "true";
+                                            break;
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                xmlhttp.open("GET", "email?email=" + email + "&name=" + name, true);
+                xmlhttp.send();
+            }
+        }
+
         function clear() {
             document.getElementById("msg").innerHTML = "&nbsp;";
         }
 
         function showText() {
+            document.getElementById("emailBtn").style.display = "none";
             navigator.geolocation.getCurrentPosition(initialize);
             setTimeout(clear, 3000);
         }
@@ -205,7 +280,22 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Name:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="Enter Name"/><br>
+                        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"/><br>
+                    </div>
+                </div>
+
+                <input id="email_verified" type="hidden" name="emailVerified"/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Email:</label>
+                    <div class="col-sm-6">
+                        <input id="email" type="text" class="form-control" name="email" placeholder="Enter Email"
+                               onblur="checkEmail(this.value)"
+                               onkeyup="checkEmail(this.value)"/>
+                        <label id="validEmail"></label>
+                        <button id="emailBtn" type="button" class="btn btn-primary" onclick="sendEmail()">Send
+                            Verification Code
+                        </button>
+                        <br>
                     </div>
                 </div>
 

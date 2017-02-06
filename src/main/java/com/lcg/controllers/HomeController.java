@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +23,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 @Controller
 public class HomeController {
@@ -95,6 +101,69 @@ public class HomeController {
             return "<span style='color:blue'><- OK</span>\n";
     }
 
+    @RequestMapping(value = "email", method = RequestMethod.GET)
+    @ResponseBody
+    public String email(HttpServletRequest request) throws Exception {
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        ;
+        String id = IdGenerator.idGenarator("F", context.getLastId());
+        try {
+            String host = "smtp.gmail.com";
+            String Password = "morafit14";
+            String from = "morateamexception@gmail.com";
+            String toAddress = email.trim();  //Receiver’s email id
+            Properties props = System.getProperties();
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtps.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+
+            Session session1 = Session.getInstance(props, null);
+
+            MimeMessage message = new MimeMessage(session1);
+
+            message.setFrom(new InternetAddress(from));
+
+            message.setRecipients(Message.RecipientType.TO, toAddress);
+
+            message.setSubject("Test Email");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            try {
+                message.setSubject("Confirm Email from Team Exception");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+
+            //messageBodyPart.setText(" Hello "+name+" Your Email Confirmation Code is " + id + " enter this in the confirmation code box ");
+            messageBodyPart.setContent("<h1>Hello " + name + "</h1><h2> Your Email Confirmation Code is " + id + "</h2><h2>enter this in the confirmation code box</h2><hr><h3>by Team Exception</h3>", "text/html");
+
+            Multipart multipart = new MimeMultipart();
+
+            multipart.addBodyPart(messageBodyPart);
+
+            messageBodyPart = new MimeBodyPart();
+
+            message.setContent(multipart);
+
+            try {
+                Transport tr = session1.getTransport("smtps");
+                tr.connect(host, from, Password);
+                tr.sendMessage(message, message.getAllRecipients());
+                tr.close();
+            } catch (Exception sfe) {
+                return "sent_failed";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "sent_failed";
+        }
+        return id;
+    }
+
+
     @RequestMapping(value = "update", method = RequestMethod.GET)
     public String showUpdate(HttpServletRequest request, ModelMap model) {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
@@ -116,6 +185,10 @@ public class HomeController {
         facilitator.setType(request.getParameter("type"));
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
+        if (request.getParameter("emailVerified").equals("true"))
+            facilitator.setEmail(request.getParameter("email"));
+        else
+            facilitator.setEmail("not Verified");
 
         if (context.updateFacilitator(facilitator)) {
             model.put("msg", "Details Updated Succesfully!!!");
@@ -142,10 +215,15 @@ public class HomeController {
         facilitator.setType(request.getParameter("type"));
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
+        if (request.getParameter("emailVerified").equals("true"))
+            facilitator.setEmail(request.getParameter("email"));
+        else
+            facilitator.setEmail("not Verified");
 
         if (context.addFacilitator(facilitator)) {
             request.getSession().setAttribute("facilitatorId", id);
             model.put("msg", "Details added successfully Upload a Photo here!!!");
+            request.setAttribute("facilitator", facilitator);
             return "upload";
         } else {
             model.put("msg", "signIn failed!!!");

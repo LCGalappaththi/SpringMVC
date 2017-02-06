@@ -60,11 +60,83 @@
             }
         }
 
+        function checkEmail(str) {
+            if (str.length == 0) {
+                document.getElementById("validEmail").innerHTML = "";
+                return;
+            } else {
+                if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str)) {
+                    document.getElementById("validEmail").style.color = "red";
+                    document.getElementById("validEmail").innerHTML = "<- Invalid Email";
+                    document.getElementById("emailBtn").style.display = "none";
+                    validEmail = 0;
+                } else {
+                    document.getElementById("validEmail").style.color = "blue";
+                    document.getElementById("validEmail").innerHTML = "<- Valid Email";
+                    document.getElementById("emailBtn").style.display = "initial";
+                    validEmail = 1;
+                }
+            }
+        }
+
+        function sendEmail() {
+            var code;
+            var email = document.getElementById("email").value;
+            var name = document.getElementById("name").value;
+            if (validEmail == 1) {
+                document.getElementById("emailBtn").disabled = true;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        if (xmlhttp.responseText == "sent_failed") {
+                            document.getElementById("validEmail").style.color = "red";
+                            document.getElementById("validEmail").innerHTML = "<-Check Email and Try again";
+                            document.getElementById("email_verified").value = "false";
+                            document.getElementById("emailBtn").disabled = false;
+                        } else {
+                            code = prompt("Please enter the confirmation code that we have sent to you(If you are not recieved with our email check  again)", "");
+
+                            if (code == xmlhttp.responseText) {
+                                document.getElementById("validEmail").style.color = "blue";
+                                document.getElementById("validEmail").innerHTML = "Email Verified";
+                                document.getElementById("email_verified").value = "true";
+                                document.getElementById("email").disabled = true;
+                                document.getElementById("emailBtn").style.display = "none";
+                            } else {
+                                document.getElementById("validEmail").style.color = "red";
+                                document.getElementById("validEmail").innerHTML = "Verification Failed";
+                                document.getElementById("email_verified").value = "false";
+                                document.getElementById("emailBtn").disabled = false;
+                                while (true) {
+                                    if (confirm('Wrong code!!! Do You Want To Enter code Again?')) {
+                                        code = prompt("Please enter the confirmation code that we have sent to you(If you are not recieved with our email check  again)", "");
+                                        if (code == xmlhttp.responseText) {
+                                            document.getElementById("validEmail").style.color = "blue";
+                                            document.getElementById("validEmail").innerHTML = "Email Verified";
+                                            document.getElementById("email").disabled = true;
+                                            document.getElementById("emailBtn").style.display = "none";
+                                            document.getElementById("email_verified").value = "true";
+                                            break;
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                xmlhttp.open("GET", "email?email=" + email + "&name=" + name, true);
+                xmlhttp.send();
+            }
+        }
+
         function clear() {
             document.getElementById("msg").innerHTML = "&nbsp;";
         }
 
         function showText() {
+            document.getElementById("emailBtn").style.display = "none";
             document.getElementById("previous").disabled = true;
             setTimeout(clear, 3000);
         }
@@ -235,6 +307,22 @@
                     </div>
                 </div>
 
+                <input id="email_verified" type="hidden" name="emailVerified"/>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Email:</label>
+                    <div class="col-sm-6">
+                        <input id="email" type="text" class="form-control" name="email" placeholder="Enter Email"
+                               value="${details.getEmail()}"
+                               onblur="checkEmail(this.value)"
+                               onkeyup="checkEmail(this.value)"/>
+                        <label id="validEmail"></label>
+                        <button id="emailBtn" type="button" class="btn btn-primary" onclick="sendEmail()">Send
+                            Verification Code
+                        </button>
+                        <br>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Address:</label>
                     <div class="col-sm-6">
@@ -290,6 +378,31 @@
                 </div>
 
                 <div class="form-group">
+
+                    <label class="control-label col-sm-2">Pick Location:</label>
+                    <div id="floating-panel">
+                        <button id="current" class="btn btn-primary" onclick="getCurrent()">Get Current Location
+                        </button>
+                        <button id="previous" class="btn btn-primary" onclick="initialize()">Get Previous Location
+                        </button>
+                    </div>
+                    <label class="control-label col-sm-2"></label>
+                    <div id="mapCanvas"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"></label>
+                    <div id="infoPanel">
+                        <b>Marker status:</b>
+                        <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                        <b>Current position:</b>
+                        <div id="info"></div>
+                        <b>Closest matching address:</b>
+                        <div id="address"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" class="btn btn-success" value="Update details"/>
                     </div>
@@ -297,24 +410,12 @@
             </form>
 
             <form class="form-horizontal" action="/logout" method="GET">
-                <input type="submit" class="btn btn-primary" value="Logout"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-primary" value="Logout"/>
+                    </div>
+                </div>
             </form>
-
-            <div id="floating-panel">
-                <button id="current" onclick="getCurrent()">Get Current Location</button>
-                <button id="previous" onclick="initialize()">Get Previous Location</button>
-            </div>
-
-            <div id="mapCanvas"></div>
-
-            <div id="infoPanel">
-                <b>Marker status:</b>
-                <div id="markerStatus"><i>Click and drag the marker.</i></div>
-                <b>Current position:</b>
-                <div id="info"></div>
-                <b>Closest matching address:</b>
-                <div id="address"></div>
-            </div>
 
         </div>
     </div>

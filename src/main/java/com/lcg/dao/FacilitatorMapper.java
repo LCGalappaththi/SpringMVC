@@ -2,6 +2,7 @@ package com.lcg.dao;
 
 import com.lcg.models.Facilitator;
 import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,6 +18,7 @@ public class FacilitatorMapper implements RowMapper<Facilitator> {
         facilitator.setLongitude(rs.getString("longitude"));
         facilitator.setLatitude(rs.getString("latitude"));
         facilitator.setImage(rs.getBlob("image"));
+        facilitator.setEmail(rs.getString("email"));
         return facilitator;
     }
 }
