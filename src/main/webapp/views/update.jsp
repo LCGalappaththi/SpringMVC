@@ -26,9 +26,11 @@
         var latLng;
         var map;
         var marker;
+        validEmail = 0;
 
         $(document).ready(function () {
             $('#changePassword').hide();
+            $('#curPass').val(${details.getPassword()});
             $('#cur').keyup(function () {
                 if ($('#cur').val() ==${details.getPassword()}) {
                     $('#changePassword').show();
@@ -39,7 +41,7 @@
         });
 
         function checkUser(str) {
-            if (str.length == 0) {
+            if (str.length == 0 || str == "${details.username}") {
                 document.getElementById("valid").innerHTML = "";
                 return;
             } else {
@@ -61,8 +63,9 @@
         }
 
         function checkEmail(str) {
-            if (str.length == 0) {
+            if (str.length == 0 || str == "${details.email}") {
                 document.getElementById("validEmail").innerHTML = "";
+                document.getElementById("emailBtn").style.display = "none";
                 return;
             } else {
                 if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(str)) {
@@ -77,6 +80,7 @@
                     validEmail = 1;
                 }
             }
+
         }
 
         function sendEmail() {
@@ -100,7 +104,7 @@
                                 document.getElementById("validEmail").style.color = "blue";
                                 document.getElementById("validEmail").innerHTML = "Email Verified";
                                 document.getElementById("email_verified").value = "true";
-                                document.getElementById("email").disabled = true;
+                                document.getElementById("email").readOnly = true;
                                 document.getElementById("emailBtn").style.display = "none";
                             } else {
                                 document.getElementById("validEmail").style.color = "red";
@@ -113,7 +117,7 @@
                                         if (code == xmlhttp.responseText) {
                                             document.getElementById("validEmail").style.color = "blue";
                                             document.getElementById("validEmail").innerHTML = "Email Verified";
-                                            document.getElementById("email").disabled = true;
+                                            document.getElementById("email").readOnly = true;
                                             document.getElementById("emailBtn").style.display = "none";
                                             document.getElementById("email_verified").value = "true";
                                             break;
@@ -137,6 +141,7 @@
 
         function showText() {
             document.getElementById("emailBtn").style.display = "none";
+            document.getElementById("email_verified").value = "true";
             document.getElementById("previous").disabled = true;
             setTimeout(clear, 3000);
         }
@@ -258,10 +263,11 @@
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="username" onblur="checkUser(this.value)"
                                onkeyup="checkUser(this.value)" value="${details.getUsername()}"/>
-                        <label id="valid"></label><br>
+                        <label id="valid"></label></br>
                     </div>
                 </div>
 
+                <input id="curPass" type="hidden" name="curPass"/>
                 <div class="form-group">
                     <label class="control-label col-sm-2">Password:</label>
                     <div class="col-sm-6">
@@ -303,7 +309,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Name:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" value="${details.getName()}"/><br>
+                        <input id="name" type="text" class="form-control" name="name" value="${details.getName()}"/><br>
                     </div>
                 </div>
 

@@ -74,7 +74,7 @@
 
         function sendEmail() {
             var code;
-            var email = document.getElementById("email").value;
+            var email = document.getElementById("emailtxt").value;
             var name = document.getElementById("name").value;
             if (validEmail == 1) {
                 document.getElementById("emailBtn").disabled = true;
@@ -93,7 +93,7 @@
                                 document.getElementById("validEmail").style.color = "blue";
                                 document.getElementById("validEmail").innerHTML = "Email Verified";
                                 document.getElementById("email_verified").value = "true";
-                                document.getElementById("email").disabled = true;
+                                document.getElementById("emailtxt").readOnly = true;//disable the email input
                                 document.getElementById("emailBtn").style.display = "none";
                             } else {
                                 document.getElementById("validEmail").style.color = "red";
@@ -106,7 +106,7 @@
                                         if (code == xmlhttp.responseText) {
                                             document.getElementById("validEmail").style.color = "blue";
                                             document.getElementById("validEmail").innerHTML = "Email Verified";
-                                            document.getElementById("email").disabled = true;
+                                            document.getElementById("emailtxt").readOnly = true;//disable the email input
                                             document.getElementById("emailBtn").style.display = "none";
                                             document.getElementById("email_verified").value = "true";
                                             break;
@@ -288,9 +288,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Email:</label>
                     <div class="col-sm-6">
-                        <input id="email" type="text" class="form-control" name="email" placeholder="Enter Email"
-                               onblur="checkEmail(this.value)"
-                               onkeyup="checkEmail(this.value)"/>
+                        <input id="emailtxt" type="text" class="form-control" name="email" placeholder="Enter Email"
+                               onblur="checkEmail(this.value)" onkeyup="checkEmail(this.value)"/>
                         <label id="validEmail"></label>
                         <button id="emailBtn" type="button" class="btn btn-primary" onclick="sendEmail()">Send
                             Verification Code

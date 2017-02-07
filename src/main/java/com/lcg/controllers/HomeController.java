@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,10 +39,20 @@ public class HomeController {
     }
 
     @RequestMapping(value = "showImage", method = RequestMethod.GET)
-    public String image(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws SQLException, IOException {
+    public void image(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Blob image = context.getFacilitatorLogin(request.getParameter("usr")).getImage();
-        model.addAttribute("image", image);
-        return "showImage";
+        byte[] imgData;
+        try {
+            imgData = image.getBytes(1, (int) image.length());
+            OutputStream o = response.getOutputStream();
+            response.setContentType("image/gif");
+            o.write(imgData);
+            o.flush();
+            o.close();
+        } catch (Exception e) {
+            System.out.println("Unable To Display image");
+            System.out.println("Image Display Error=" + e.getMessage());
+        }
     }
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -106,7 +117,6 @@ public class HomeController {
     public String email(HttpServletRequest request) throws Exception {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
-        ;
         String id = IdGenerator.idGenarator("F", context.getLastId());
         try {
             String host = "smtp.gmail.com";
@@ -175,7 +185,10 @@ public class HomeController {
     @RequestMapping(value = "updatenow", method = RequestMethod.GET)
     public String UpdateFacilitator(HttpServletRequest request, ModelMap model) throws SQLException, ClassNotFoundException {
         facilitator.setUsername(request.getParameter("username"));
-        facilitator.setPassword(request.getParameter("newPassword"));
+        if (request.getParameter("newPassword").trim().equals(""))
+            facilitator.setPassword(request.getParameter("curPass"));
+        else
+            facilitator.setPassword(request.getParameter("newPassword"));
         facilitator.setFacilitatorId(request.getSession().getAttribute("loggedUserId").toString());
         facilitator.setName(request.getParameter("name"));
         facilitator.setAddress(request.getParameter("address"));
@@ -201,7 +214,7 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.GET)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public String addFacilitator(ModelMap model, HttpServletRequest request) throws SQLException, ClassNotFoundException, IOException, ServletException {
         facilitator.setUsername(request.getParameter("username"));
         facilitator.setPassword(request.getParameter("password"));
@@ -215,10 +228,11 @@ public class HomeController {
         facilitator.setType(request.getParameter("type"));
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
-        if (request.getParameter("emailVerified").equals("true"))
+        if (request.getParameter("emailVerified").equals("true")) {
             facilitator.setEmail(request.getParameter("email"));
-        else
+        } else {
             facilitator.setEmail("not Verified");
+        }
 
         if (context.addFacilitator(facilitator)) {
             request.getSession().setAttribute("facilitatorId", id);

@@ -30,24 +30,24 @@
 
 
             <h1>--------------------------------Your details----------------------------</h1>
-            <c:out value="${details.name}"/>
-            <h2>${details.getPassword()}</h2>
-            <h2>${details.getName()}</h2>
-            <h2>${details.getAddress()}</h2>
-            <h2>${details.getUsername()}</h2>
 
-            <img width="200" height="200" src="/showImage?usr=${details.getUsername()}" alt="Image"/>
+            <h2>Name :${details.getName()}</h2>
+            <h2>Address:${details.getAddress()}</h2>
+            <h2>Email :${details.getEmail()}</h2>
+            <h2>Facilitator Type:${details.getType()}</h2>
+
+            <h2>Image:<img width="200" height="200" src="/showImage?usr=${details.getUsername()}" alt="Image"/></h2>
 
             <form action="/logout" method="GET">
-                <input type="submit" value="Logout"/>
+                <input type="submit" class="btn btn-primary" value="Logout"/>
             </form>
 
             <form action="/update" method="GET">
-                <input type="submit" value="Change Details"/>
+                <input type="submit" class="btn btn-success" value="Change Details"/>
             </form>
 
             <form action="/maps" method="GET">
-                <input type="submit" value="show me in map"/>
+                <input type="submit" class="btn btn-primary" value="show me in map"/>
             </form>
 
         </div>
