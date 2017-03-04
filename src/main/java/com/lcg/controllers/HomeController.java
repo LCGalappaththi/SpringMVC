@@ -136,8 +136,6 @@ public class HomeController {
 
             message.setRecipients(Message.RecipientType.TO, toAddress);
 
-            message.setSubject("Test Email");
-
             BodyPart messageBodyPart = new MimeBodyPart();
 
             try {
@@ -189,7 +187,8 @@ public class HomeController {
             facilitator.setPassword(request.getParameter("curPass"));
         else
             facilitator.setPassword(request.getParameter("newPassword"));
-        facilitator.setFacilitatorId(request.getSession().getAttribute("loggedUserId").toString());
+        String id = request.getSession().getAttribute("loggedUserId").toString();
+        facilitator.setFacilitatorId(id);
         facilitator.setName(request.getParameter("name"));
         facilitator.setAddress(request.getParameter("address"));
         facilitator.setContact1(request.getParameter("contact1"));
@@ -204,8 +203,10 @@ public class HomeController {
             facilitator.setEmail("not Verified");
 
         if (context.updateFacilitator(facilitator)) {
+            request.getSession().setAttribute("facilitator", facilitator);
             model.put("msg", "Details Updated Succesfully!!!");
-            return "login";
+            request.setAttribute("facilitator", facilitator);
+            return "updateImage";
         } else {
             model.put("msg", "Update failed!!!");
             showUpdate(request, model);
@@ -235,7 +236,7 @@ public class HomeController {
         }
 
         if (context.addFacilitator(facilitator)) {
-            request.getSession().setAttribute("facilitatorId", id);
+            request.getSession().setAttribute("facilitator", facilitator);
             model.put("msg", "Details added successfully Upload a Photo here!!!");
             request.setAttribute("facilitator", facilitator);
             return "upload";
@@ -244,6 +245,8 @@ public class HomeController {
             return "signIn";
         }
     }
+
+
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, ModelMap model) {

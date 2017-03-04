@@ -32,6 +32,10 @@
             <h2 id="msg">${msg}</h2></div>
 
         <div class="panel-body">
+            <h2>Your Current Image:<img width="200" height="200" src="/showImage?usr=${facilitator.getUsername()}"
+                                        alt="Image"/></h2>
+
+            <h1>If you want to change upload a new one</h1>
 
             <form class="form-horizontal" action="uploadServlet" method="POST" enctype="multipart/form-data">
 
@@ -66,4 +70,5 @@
 <div id="footer">
     <%@ include file="fragments/footer.jspf" %>
 </div>
+</html>
 
