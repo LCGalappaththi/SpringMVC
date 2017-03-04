@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="teamException@localhost" uuid="71f87a03-2985-4f9e-9eb2-ca7987d4b6c1">
+    <data-source source="LOCAL" name="teamexception@localhost" uuid="05f47150-8b26-4c5b-8009-37d63a441654">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/teamException</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/teamexception</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

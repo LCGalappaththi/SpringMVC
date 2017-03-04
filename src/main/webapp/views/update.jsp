@@ -256,7 +256,7 @@
         <div class="panel-heading"><h1> Hello ${loggedUserName} Update your Details</h1>
             <h2 id="msg">${msg}</h2></div>
         <div class="panel-body">
-            <form class="form-horizontal" action="/updatenow" method="GET">
+            <form class="form-horizontal" action="/updatenow" method="POST">
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">Username:</label>
