@@ -54,7 +54,7 @@
             <h2 id="msg">${msg}</h2></div>
         <div class="panel-body">
             <h1>Choose Your Option</h1>
-            <form class="form-horizontal" method="GET" action="/login">
+            <form class="form-horizontal" method="POST" action="/login">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button style="width: 80%; padding-right: 10%; padding-left: 10%;" type="submit"
@@ -63,7 +63,7 @@
                 </div>
             </form>
 
-            <form class="form-horizontal" method="GET" action="/signIn">
+            <form class="form-horizontal" method="POST" action="/signIn">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button style="width: 80%; padding-right: 10%; padding-left: 10%;" type="submit"

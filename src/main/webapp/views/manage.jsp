@@ -24,7 +24,7 @@
         <div class="panel-body">
             <h1 style="display: inline;">Hello ${loggedUserName} Welcome Back!!!</h1>
 
-            <form action="/logout" class="form-horizontal" method="GET">
+            <form action="/logout" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" class="btn btn-primary" value="Logout"/>
@@ -32,7 +32,7 @@
                 </div>
             </form>
 
-            <form action="/details" class="form-horizontal" method="GET">
+            <form action="/details" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" class="btn btn-primary" value="My Account"/>
@@ -40,7 +40,7 @@
                 </div>
             </form>
 
-            <form action="/delete" class="form-horizontal" method="GET">
+            <form action="/delete" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" class="btn btn-primary" value="Delete Account"/>

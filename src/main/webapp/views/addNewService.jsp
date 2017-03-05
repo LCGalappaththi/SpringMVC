@@ -107,7 +107,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading"><h1>Add Predefined Service</h1></div>
         <div class="panel-body">
-            <form id="service" class="form-horizontal" method="GET" action="addServicesData/">
+            <form id="service" class="form-horizontal" method="POST" action="addServicesData/">
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">Service Name:</label>

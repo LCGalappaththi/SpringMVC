@@ -16,6 +16,7 @@ public class Facilitator {
     private String contact1;
     private String contact2;
     private String contact3;
+    private int noOfWorklines;
     private Blob image;
 
 
@@ -129,5 +130,13 @@ public class Facilitator {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getNoOfWorklines() {
+        return noOfWorklines;
+    }
+
+    public void setNoOfWorklines(int noOfWorklines) {
+        this.noOfWorklines = noOfWorklines;
     }
 }

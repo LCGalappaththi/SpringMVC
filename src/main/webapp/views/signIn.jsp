@@ -47,7 +47,7 @@
                             document.getElementById("valid").innerHTML = xmlhttp.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "ajax/" + str, true);
+                    xmlhttp.open("POST", "ajax/" + str, true);
                     xmlhttp.send();
                 }
             }
@@ -119,7 +119,7 @@
                         }
                     }
                 };
-                xmlhttp.open("GET", "email?email=" + email + "&name=" + name, true);
+                xmlhttp.open("POST", "email?email=" + email + "&name=" + name, true);
                 xmlhttp.send();
             }
         }
@@ -329,7 +329,19 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Type:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="type" placeholder="Enter Type"/><br>
+                        <select name="type" class="form-control">
+                            <option value="Not Defined">--Select Type--</option>
+                            <option value="Garage">Garage</option>
+                            <option value="Service Station">Service Station</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">No Of Worklines:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="worklines" placeholder="Enter No Of Worklines"/><br>
                     </div>
                 </div>
 

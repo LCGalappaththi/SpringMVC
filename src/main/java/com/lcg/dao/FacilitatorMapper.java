@@ -19,6 +19,7 @@ public class FacilitatorMapper implements RowMapper<Facilitator> {
         facilitator.setLatitude(rs.getString("latitude"));
         facilitator.setImage(rs.getBlob("image"));
         facilitator.setEmail(rs.getString("email"));
+        facilitator.setNoOfWorklines(rs.getInt("noOfWorklines"));
         return facilitator;
     }
 }

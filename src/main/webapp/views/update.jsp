@@ -1,3 +1,4 @@
+<%@ page import="com.lcg.models.Facilitator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -56,7 +57,7 @@
                             document.getElementById("valid").innerHTML = xmlhttp.responseText;
                         }
                     };
-                    xmlhttp.open("GET", "ajax/" + str, true);
+                    xmlhttp.open("POST", "ajax/" + str, true);
                     xmlhttp.send();
                 }
             }
@@ -130,7 +131,7 @@
                         }
                     }
                 };
-                xmlhttp.open("GET", "email?email=" + email + "&name=" + name, true);
+                xmlhttp.open("POST", "email?email=" + email + "&name=" + name, true);
                 xmlhttp.send();
             }
         }
@@ -363,7 +364,22 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Type:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="type" value="${details.getType()}"/><br>
+                        <select name="type" class="form-control">
+                            <%Facilitator f = (Facilitator) request.getAttribute("details");%>
+                            <option value="Garage" <%=f.getType().equals("Garage") ? "selected" : ""%>>Garage</option>
+                            <option value="Service Station" <%=f.getType().equals("Service Station") ? "selected" : ""%>>
+                                Service Station
+                            </option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">No Of Worklines:</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="worklines" value="${details.getNoOfWorklines()}"
+                               placeholder="Enter No Of Worklines"/><br>
                     </div>
                 </div>
 
@@ -415,7 +431,7 @@
                 </div>
             </form>
 
-            <form class="form-horizontal" action="/logout" method="GET">
+            <form class="form-horizontal" action="/logout" method="POST">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" class="btn btn-primary" value="Logout"/>

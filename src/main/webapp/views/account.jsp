@@ -38,15 +38,15 @@
 
             <h2>Image:<img width="200" height="200" src="/showImage?usr=${details.getUsername()}" alt="Image"/></h2>
 
-            <form action="/logout" method="GET">
+            <form action="/logout" method="POST">
                 <input type="submit" class="btn btn-primary" value="Logout"/>
             </form>
 
-            <form action="/update" method="GET">
+            <form action="/update" method="POST">
                 <input type="submit" class="btn btn-success" value="Change Details"/>
             </form>
 
-            <form action="/maps" method="GET">
+            <form action="/maps" method="POST">
                 <input type="submit" class="btn btn-primary" value="show me in map"/>
             </form>
 

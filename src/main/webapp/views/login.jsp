@@ -24,7 +24,7 @@
         <div class="panel-heading"><h1>Facilitator Login Page</h1>
             <h1 id="msg">${msg} ${status} ${loggedUser}</h1></div>
         <div class="panel-body">
-            <form action="/logged" class="form-horizontal" method="GET">
+            <form action="/logged" class="form-horizontal" method="POST">
                 <div class="form-group">
                     <label class="control-label col-sm-2">Username:</label>
                     <div class="col-sm-6">

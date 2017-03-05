@@ -55,17 +55,17 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public String showLogin() {
         return "login";
     }
 
-    @RequestMapping(value = "signIn", method = RequestMethod.GET)
+    @RequestMapping(value = "signIn", method = RequestMethod.POST)
     public String showSignIn() {
         return "signIn";
     }
 
-    @RequestMapping(value = "logged", method = RequestMethod.GET)
+    @RequestMapping(value = "logged", method = RequestMethod.POST)
     public String logged(HttpServletRequest request, ModelMap model) {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
@@ -81,7 +81,7 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(value = "details", method = RequestMethod.GET)
+    @RequestMapping(value = "details", method = RequestMethod.POST)
     public String showDetails(HttpServletRequest request, ModelMap model) {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
         Facilitator logged = context.getFacilitatorDetails(facilitatorId);
@@ -89,7 +89,7 @@ public class HomeController {
         return "account";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
     public String deleteFacilitator(HttpServletRequest request, ModelMap model) {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
         if (context.deleteFacilitator(facilitatorId)) {
@@ -103,7 +103,7 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(value = "ajax/{q}", method = RequestMethod.GET)
+    @RequestMapping(value = "ajax/{q}", method = RequestMethod.POST)
     @ResponseBody
     public String ajaxTest(@PathVariable("q") String user) {
         if (user.equalsIgnoreCase(context.getFacilitatorLogin(user).getUsername()))
@@ -112,7 +112,7 @@ public class HomeController {
             return "<span style='color:blue'><- OK</span>\n";
     }
 
-    @RequestMapping(value = "email", method = RequestMethod.GET)
+    @RequestMapping(value = "email", method = RequestMethod.POST)
     @ResponseBody
     public String email(HttpServletRequest request) throws Exception {
         String email = request.getParameter("email");
@@ -172,7 +172,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "update", method = RequestMethod.GET)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public String showUpdate(HttpServletRequest request, ModelMap model) {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
         Facilitator logged = context.getFacilitatorDetails(facilitatorId);
@@ -197,6 +197,7 @@ public class HomeController {
         facilitator.setType(request.getParameter("type"));
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
+        facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
         if (request.getParameter("emailVerified").equals("true"))
             facilitator.setEmail(request.getParameter("email"));
         else
@@ -229,6 +230,7 @@ public class HomeController {
         facilitator.setType(request.getParameter("type"));
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
+        facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
         if (request.getParameter("emailVerified").equals("true")) {
             facilitator.setEmail(request.getParameter("email"));
         } else {
@@ -247,15 +249,14 @@ public class HomeController {
     }
 
 
-
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
     public String logout(HttpServletRequest request, ModelMap model) {
         request.getSession().removeAttribute("loggedUserName");
         request.getSession().removeAttribute("loggedUserId");
         return "login";
     }
 
-    @RequestMapping(value = "maps", method = RequestMethod.GET)
+    @RequestMapping(value = "maps", method = RequestMethod.POST)
     public String map(HttpServletRequest request, ModelMap model) {
         Facilitator logged = context.getFacilitatorDetails(request.getSession().getAttribute("loggedUserId").toString());
         model.put("latitude", logged.getLatitude());
@@ -263,26 +264,26 @@ public class HomeController {
         return "maps";
     }
 
-    @RequestMapping(value = "pickLocation", method = RequestMethod.GET)
+    @RequestMapping(value = "pickLocation", method = RequestMethod.POST)
     public String pick(HttpServletRequest request, ModelMap model) {
         List<Facilitator> facList = context.listFacilitators();
         model.put("coordinates", facList);
         return "pickLocation";
     }
 
-    @RequestMapping(value = "addService", method = RequestMethod.GET)
+    @RequestMapping(value = "addService", method = RequestMethod.POST)
     public String newService() {
         return "addNewService";
     }
 
 
-    @RequestMapping(value = "selectedFacilitator/{selected}", method = RequestMethod.GET)
+    @RequestMapping(value = "selectedFacilitator/{selected}", method = RequestMethod.POST)
     public String FacilitatorSelect(@PathVariable("selected") String facilitator, ModelMap model) {
         model.put("selectedFacilitator", facilitator);
         return "facilitatorServices";
     }
 
-    @RequestMapping(value = "addServicesData/{q}", method = RequestMethod.GET)
+    @RequestMapping(value = "addServicesData/{q}", method = RequestMethod.POST)
     public String addServices(@PathVariable("q") String data) {
         String arr[] = data.split(",");
         String serviceName = arr[0];// first two elements servicename and description then sets of 3 elements

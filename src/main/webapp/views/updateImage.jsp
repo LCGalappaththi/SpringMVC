@@ -54,7 +54,7 @@
 
             </form>
 
-            <form class="form-horizontal" action="uploadServlet" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" action="/login" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="file" class="form-control" name="file"  width="100" id="file"/>
                     <div class="col-sm-offset-2 col-sm-10">
