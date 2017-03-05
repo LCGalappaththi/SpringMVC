@@ -104,7 +104,7 @@ public class UploadServlet extends HttpServlet {
                 conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
                 File image;
                 if (facilitator.getType().equalsIgnoreCase("garage"))
-                     image = new File("C:/SpringMVC/garage.jpg");
+                    image = new File("C:/SpringMVC/garage.jpg");
                 else
                     image = new File("C:/SpringMVC/service.jpg");
                 FileInputStream fis = new FileInputStream(image);
