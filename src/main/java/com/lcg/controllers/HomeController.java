@@ -1,6 +1,6 @@
 package com.lcg.controllers;
 
-import com.lcg.dao.FacilitatorJDBCTemplate;
+import com.lcg.jdbcTemplates.FacilitatorJDBCTemplate;
 import com.lcg.dao.IdGenerator;
 import com.lcg.models.Facilitator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +176,7 @@ public class HomeController {
         String facilitatorId = request.getSession().getAttribute("loggedUserId").toString();
         Facilitator logged = context.getFacilitatorDetails(facilitatorId);
         model.addAttribute("details", logged);
+        System.out.println(logged.getCloseTime());
         return "update";
     }
 
@@ -197,8 +198,8 @@ public class HomeController {
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
         facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
-        facilitator.setOpen(request.getParameter("open"));
-        facilitator.setClose(request.getParameter("close"));
+        facilitator.setOpenTime(request.getParameter("open"));
+        facilitator.setCloseTime(request.getParameter("close"));
         if (request.getParameter("emailVerified").equals("true"))
             facilitator.setEmail(request.getParameter("email"));
         else
@@ -232,8 +233,8 @@ public class HomeController {
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
         facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
-        facilitator.setOpen(request.getParameter("open"));
-        facilitator.setClose(request.getParameter("close"));
+        facilitator.setOpenTime(request.getParameter("open"));
+        facilitator.setCloseTime(request.getParameter("close"));
         if (request.getParameter("emailVerified").equals("true")) {
             facilitator.setEmail(request.getParameter("email"));
         } else {

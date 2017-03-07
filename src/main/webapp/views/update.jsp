@@ -340,14 +340,14 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Opening Time:</label>
                     <div class="col-sm-6">
-                        <input type="time" class="form-control" name="open" value="${details.getOpen()}"/><br>
+                        <input type="time" class="form-control" name="open" value="${details.getOpenTime()}"/><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">Closing Time:</label>
                     <div class="col-sm-6">
-                        <input type="time" class="form-control" name="close" value="${details.getClose()}"/><br>
+                        <input type="time" class="form-control" name="close" value="${details.getCloseTime()}"/><br>
                     </div>
                 </div>
 
@@ -392,7 +392,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">No Of Worklines:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="worklines" value="${details.getNoOfWorklines()}"
+                        <input type="number" class="form-control" name="worklines" value="${details.getNoOfWorklines()}"
                                placeholder="Enter No Of Worklines"/><br>
                     </div>
                 </div>

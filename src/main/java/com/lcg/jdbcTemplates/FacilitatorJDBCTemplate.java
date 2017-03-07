@@ -1,5 +1,7 @@
-package com.lcg.dao;
+package com.lcg.jdbcTemplates;
 
+import com.lcg.dao.FacilitatorDAO;
+import com.lcg.dao.FacilitatorMapper;
 import com.lcg.models.Facilitator;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,8 @@ public class FacilitatorJDBCTemplate implements FacilitatorDAO {
 
     public boolean addFacilitator(Facilitator facilitator) {
         try {
-            String SQL = "insert into facilitator (username,password,facilitatorId,facilitatorName,email,facilitatorAddress,facilitatorType,longitude,latitude,noOfWorklines) values (?,?,?,?,?,?,?,?,?,?)";
-            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getFacilitatorId(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines());
+            String SQL = "insert into facilitator (username,password,facilitatorId,facilitatorName,email,facilitatorAddress,facilitatorType,longitude,latitude,noOfWorklines,openTime,closeTime) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getFacilitatorId(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines(),facilitator.getOpenTime(),facilitator.getCloseTime());
             SQL = "insert into facilitatorcontactno (facilitatorId,contactNo) values (?,?)";
             if (!facilitator.getContact1().isEmpty())
                 jdbcTemplateObject.update(SQL, facilitator.getFacilitatorId(), facilitator.getContact1());
@@ -86,7 +88,7 @@ public class FacilitatorJDBCTemplate implements FacilitatorDAO {
     public boolean updateFacilitator(Facilitator facilitator) {
         try {
             String SQL = "update facilitator set username=?,password=?,facilitatorName=?,email=?,facilitatorAddress=?,facilitatorType=?,longitude=?,latitude=?,noOfWorklines=?,openTime=?,closeTime=? where facilitatorId = ?";
-            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines(),facilitator.getOpen(),facilitator.getClose(),facilitator.getFacilitatorId());
+            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines(),facilitator.getOpenTime(),facilitator.getCloseTime(),facilitator.getFacilitatorId());
             SQL = "delete from facilitatorcontactno where facilitatorId=?";
             jdbcTemplateObject.update(SQL, facilitator.getFacilitatorId());
             SQL = "insert into facilitatorcontactno  (contactNo,facilitatorId) values(?,?)";

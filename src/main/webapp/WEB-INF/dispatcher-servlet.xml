@@ -22,7 +22,7 @@
         <property name="password" value=""/>
     </bean>
 
-    <bean id="facilitatorJDBCTemplate" class="com.lcg.dao.FacilitatorJDBCTemplate">
+    <bean id="facilitatorJDBCTemplate" class="com.lcg.jdbcTemplates.FacilitatorJDBCTemplate">
         <property name="dataSource"  ref="DataSource" />
     </bean>
 

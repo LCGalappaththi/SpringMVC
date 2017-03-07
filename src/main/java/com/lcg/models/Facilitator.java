@@ -17,8 +17,8 @@ public class Facilitator {
     private String contact3;
     private int noOfWorklines;
     private Blob image;
-    private String open;
-    private String close;
+    private String openTime;
+    private String closeTime;
 
 
     public String getUsername() {
@@ -133,19 +133,19 @@ public class Facilitator {
         this.noOfWorklines = noOfWorklines;
     }
 
-    public String getOpen() {
-        return open;
+    public String getOpenTime() {
+        return openTime;
     }
 
-    public void setOpen(String open) {
-        this.open = open;
+    public void setOpenTime(String open) {
+        this.openTime = open;
     }
 
-    public String getClose() {
-        return close;
+    public String getCloseTime() {
+        return closeTime;
     }
 
-    public void setClose(String close) {
-        this.close = close;
+    public void setCloseTime(String close) {
+        this.closeTime = close;
     }
 }
