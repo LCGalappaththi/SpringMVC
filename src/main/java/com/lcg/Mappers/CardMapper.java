@@ -1,4 +1,4 @@
-package com.lcg.dao;
+package com.lcg.Mappers;
 
 import com.lcg.models.Card;
 import org.springframework.jdbc.core.RowMapper;

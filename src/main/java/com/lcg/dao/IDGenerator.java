@@ -1,6 +1,6 @@
 package com.lcg.dao;
 
-public class IdGenerator {
+public class IDGenerator {
     public static String idGenarator(String prefix,String oldId){
         String s2 = oldId.substring(1);
         long x = Long.parseLong(s2);

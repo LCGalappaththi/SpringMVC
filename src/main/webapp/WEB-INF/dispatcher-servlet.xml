@@ -28,7 +28,7 @@
 
     <bean id="facilitator" class="com.lcg.models.Facilitator"></bean>
 
-    <bean id="facilitatorMapper" class="com.lcg.dao.FacilitatorMapper"></bean>
+    <bean id="facilitatorMapper" class="com.lcg.Mappers.FacilitatorMapper"></bean>
 
     <bean id="homeController" class="com.lcg.controllers.HomeController"></bean>
 

@@ -1,7 +1,7 @@
 package com.lcg.jdbcTemplates;
 
 import com.lcg.dao.FacilitatorDAO;
-import com.lcg.dao.FacilitatorMapper;
+import com.lcg.Mappers.FacilitatorMapper;
 import com.lcg.models.Facilitator;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

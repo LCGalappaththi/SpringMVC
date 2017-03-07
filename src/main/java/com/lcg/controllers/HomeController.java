@@ -1,7 +1,7 @@
 package com.lcg.controllers;
 
 import com.lcg.jdbcTemplates.FacilitatorJDBCTemplate;
-import com.lcg.dao.IdGenerator;
+import com.lcg.dao.IDGenerator;
 import com.lcg.models.Facilitator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,7 +116,7 @@ public class HomeController {
     public String email(HttpServletRequest request) throws Exception {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
-        String id = IdGenerator.idGenarator("F", context.getLastId());
+        String id = IDGenerator.idGenarator("F", context.getLastId());
         try {
             String host = "smtp.gmail.com";
             String Password = "morafit14";
@@ -222,7 +222,7 @@ public class HomeController {
     public String addFacilitator(ModelMap model, HttpServletRequest request) throws SQLException, ClassNotFoundException, IOException, ServletException {
         facilitator.setUsername(request.getParameter("username"));
         facilitator.setPassword(request.getParameter("password"));
-        String id = IdGenerator.idGenarator("F", context.getLastId());
+        String id = IDGenerator.idGenarator("F", context.getLastId());
         facilitator.setFacilitatorId(id);
         facilitator.setName(request.getParameter("name"));
         facilitator.setAddress(request.getParameter("address"));
