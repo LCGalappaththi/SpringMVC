@@ -85,8 +85,8 @@ public class FacilitatorJDBCTemplate implements FacilitatorDAO {
 
     public boolean updateFacilitator(Facilitator facilitator) {
         try {
-            String SQL = "update facilitator set username=?,password=?,facilitatorName=?,email=?,facilitatorAddress=?,facilitatorType=?,longitude=?,latitude=?,noOfWorklines=? where facilitatorId = ?";
-            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines(), facilitator.getFacilitatorId());
+            String SQL = "update facilitator set username=?,password=?,facilitatorName=?,email=?,facilitatorAddress=?,facilitatorType=?,longitude=?,latitude=?,noOfWorklines=?,openTime=?,closeTime=? where facilitatorId = ?";
+            jdbcTemplateObject.update(SQL, facilitator.getUsername(), facilitator.getPassword(), facilitator.getName(), facilitator.getEmail(), facilitator.getAddress(), facilitator.getType(), facilitator.getLongitude(), facilitator.getLatitude(),facilitator.getNoOfWorklines(),facilitator.getOpen(),facilitator.getClose(),facilitator.getFacilitatorId());
             SQL = "delete from facilitatorcontactno where facilitatorId=?";
             jdbcTemplateObject.update(SQL, facilitator.getFacilitatorId());
             SQL = "insert into facilitatorcontactno  (contactNo,facilitatorId) values(?,?)";

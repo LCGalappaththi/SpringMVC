@@ -338,6 +338,20 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label col-sm-2">Opening Time:</label>
+                    <div class="col-sm-6">
+                        <input type="time" class="form-control" name="open" value="${details.getOpen()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Closing Time:</label>
+                    <div class="col-sm-6">
+                        <input type="time" class="form-control" name="close" value="${details.getClose()}"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="control-label col-sm-2">ContactNo 1:</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="contact1" placeholder="Enter ContactNo 1"

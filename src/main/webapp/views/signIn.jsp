@@ -288,7 +288,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Email:</label>
                     <div class="col-sm-6">
-                        <input id="emailtxt" type="text" class="form-control" name="email" placeholder="Enter Email"
+                        <input id="emailtxt" type="email" class="form-control" name="email" placeholder="Enter Email"
                                onblur="checkEmail(this.value)" onkeyup="checkEmail(this.value)"/>
                         <label id="validEmail"></label>
                         <button id="emailBtn" type="button" class="btn btn-primary" onclick="sendEmail()">Send
@@ -302,6 +302,20 @@
                     <label class="control-label col-sm-2">Address:</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="address" placeholder="Enter Address"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Opening Time:</label>
+                    <div class="col-sm-6">
+                        <input type="time" class="form-control" name="open" placeholder="Follow 24 Hour Format(HH:MM)"/><br>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Closing Time:</label>
+                    <div class="col-sm-6">
+                        <input type="time" class="form-control" name="close" placeholder="Follow 24 Hour Format(HH:MM)"/><br>
                     </div>
                 </div>
 
@@ -341,7 +355,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">No Of Worklines:</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="worklines" placeholder="Enter No Of Worklines"/><br>
+                        <input type="number" min="1" class="form-control" name="worklines"
+                               placeholder="Enter No Of Worklines" value="1"/><br>
                     </div>
                 </div>
 

@@ -20,6 +20,8 @@ public class FacilitatorMapper implements RowMapper<Facilitator> {
         facilitator.setImage(rs.getBlob("image"));
         facilitator.setEmail(rs.getString("email"));
         facilitator.setNoOfWorklines(rs.getInt("noOfWorklines"));
+        facilitator.setOpen(rs.getDate("open").toString());
+        facilitator.setClose(rs.getDate("close").toString());
         return facilitator;
     }
 }

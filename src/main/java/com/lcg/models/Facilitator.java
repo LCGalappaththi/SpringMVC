@@ -5,7 +5,6 @@ import java.sql.Blob;
 public class Facilitator {
     private String username;
     private String password;
-    private String contactId;
     private String facilitatorId;
     private String name;
     private String email;
@@ -18,6 +17,8 @@ public class Facilitator {
     private String contact3;
     private int noOfWorklines;
     private Blob image;
+    private String open;
+    private String close;
 
 
     public String getUsername() {
@@ -76,14 +77,6 @@ public class Facilitator {
         this.latitude = latitude;
     }
 
-    public String getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(String contactId) {
-        this.contactId = contactId;
-    }
-
     public String getFacilitatorId() {
         return facilitatorId;
     }
@@ -138,5 +131,21 @@ public class Facilitator {
 
     public void setNoOfWorklines(int noOfWorklines) {
         this.noOfWorklines = noOfWorklines;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
+    }
+
+    public String getClose() {
+        return close;
+    }
+
+    public void setClose(String close) {
+        this.close = close;
     }
 }

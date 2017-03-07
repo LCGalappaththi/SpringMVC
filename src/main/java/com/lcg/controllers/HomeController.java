@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -198,6 +197,8 @@ public class HomeController {
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
         facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
+        facilitator.setOpen(request.getParameter("open"));
+        facilitator.setClose(request.getParameter("close"));
         if (request.getParameter("emailVerified").equals("true"))
             facilitator.setEmail(request.getParameter("email"));
         else
@@ -231,6 +232,8 @@ public class HomeController {
         facilitator.setLongitude(request.getParameter("longitude"));
         facilitator.setLatitude(request.getParameter("latitude"));
         facilitator.setNoOfWorklines(Integer.parseInt(request.getParameter("worklines")));
+        facilitator.setOpen(request.getParameter("open"));
+        facilitator.setClose(request.getParameter("close"));
         if (request.getParameter("emailVerified").equals("true")) {
             facilitator.setEmail(request.getParameter("email"));
         } else {
